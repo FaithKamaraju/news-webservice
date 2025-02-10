@@ -21,4 +21,6 @@ env_activation.sh
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
-
+sitescraper/
+*.sql
+architecture.html
