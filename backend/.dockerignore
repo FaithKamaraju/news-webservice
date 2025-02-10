@@ -33,6 +33,6 @@
 LICENSE
 README.md
 README.Docker.md
-newsapi.ipynb
-env_activation.sh
+**/newsapi.ipynb
+**/env_activation.sh
 

@@ -13,18 +13,13 @@ class NewsArticleBase(BaseModel):
     source : str
     categories : list[str]
 
-class NewsArticleResp(NewsArticleBase):
-    model_config = ConfigDict(from_attributes=True)
+class InferenceResults(BaseModel):
     
     summary : str
     bias : float
     toxicity : float
 
-class NewsArticleEnhancedResp(NewsArticleBase):
+class NewsArticleEnhancedResp(NewsArticleBase, InferenceResults):
     model_config = ConfigDict(from_attributes=True)
-    
-    summary : str
-    bias : float
-    toxicity : float
     
     

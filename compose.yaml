@@ -15,11 +15,11 @@ services:
     ports:
       - 8000:8000
     restart: always
-    volumes:
-      - ./backend:/app
+    # volumes:
+    #   - ./backend:/app
     depends_on:
       - db
-      - model-endpoint
+      # - model-endpoint
 
   db:
     image: postgres
