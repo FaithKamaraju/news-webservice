@@ -1,17 +1,21 @@
 from fastapi import FastAPI, Depends, HTTPException
+import uvicorn
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text, select
 from contextlib import asynccontextmanager
 import json
-# from datetime import datetime
-# from apscheduler.schedulers.background import BackgroundScheduler
+import asyncio
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.interval import IntervalTrigger
+from datetime import datetime, timedelta
+# from apscheduler.schedulers.background import AsyncIOScheduler
 
 
-from core.db import engine, Base, AsyncSessionLocal
+from core.db import get_db, create_all
 from core.schemas import NewsArticleMetaDataSchema
 from core.models import NewsArticle, InferenceResults
 
-# from news import api_pull
+from news.article_updater_job import pull_and_add
 
 # news_articles = pd.read_csv("news_articles.csv", index_col=0)
 # time_stp = news_articles['published_at'].apply(lambda x: datetime.fromisoformat(x))
@@ -22,41 +26,17 @@ with open('api_key.json', 'r') as f:
     api_key = json.load(f)['api_key']
 
 
-# with open('newsarticles.json','r') as f:
-#     article_data = json.load(f)
-
-async def get_db():
-    db = AsyncSessionLocal()
-    try:
-        yield db
-    finally:
-        await db.close()
-    
-async def create_all():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
     
     await create_all()
-    # async with AsyncSessionLocal() as session:
-    #     stmt = text("""
-    #         INSERT INTO news_article (uuid, title, description, url, image_url, published_at, source, categories)
-    #         VALUES (:uuid, :title, :description, :url, :image_url, :published_at, :source, :categories)
-    #     """)
-    #     await session.execute(
-    #         stmt,news_articles
-    #     )
-    #     await session.commit()
-    # article_data = api_pull.pull_top_news_articles(api_key)
-    # db = get_db()
+    # await pull_and_add()
     yield
 
 app = FastAPI(lifespan=lifespan)
 
 
-# items = [{"name": "Foo"}, {"name": "Bar"}, {"name": "Baz"}]
 
 @app.get("/")
 async def read_root() -> dict[str,str]:
@@ -90,9 +70,30 @@ async def return_n_articles(n:int, db: AsyncSession = Depends(get_db)) -> list[N
 async def add_articles_to_db(db: AsyncSession = Depends(get_db)):
     pass
 
-""" 
-get_articles -> for frontend to get articles along with inference results
-send_articles_for_inference -> to send article content for inference results
-get_inference_results -> to recieve inference results back from the model endpoint
 
-"""
+
+
+
+def start_scheduler(loop):
+    scheduler = AsyncIOScheduler(event_loop=loop)
+    start_datetime = datetime.now()
+    end_datetime = datetime.now() + timedelta(hours=1)
+    scheduler.add_job(pull_and_add,IntervalTrigger(seconds=300,start_date=start_datetime,end_date=end_datetime), misfire_grace_time=None ,id="pull_and_add",args=[api_key])
+
+    scheduler.start()
+
+    
+def start_uvicorn(loop):
+    config = uvicorn.Config(app,host="0.0.0.0",port=8000 ,loop=loop)
+    server = uvicorn.Server(config)
+    loop.run_until_complete(server.serve())
+
+
+if __name__ == '__main__':
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    start_scheduler(loop)
+    start_uvicorn(loop)
+    
+
+    
