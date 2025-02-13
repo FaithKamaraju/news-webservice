@@ -29,16 +29,10 @@ class InferenceResultsRespSchema(BaseModel):
     uuid : str
     bias : float
     sentiment_score : float
-
-# class ScrappedContentRespSchema(BaseModel):
     
-#     id : int
-#     uuid : str
-#     scrapped_content : str
     
 class NewsArticleRespSchema(BaseModel):
     
-    id: int
     uuid : str
     title : str
     description : str 

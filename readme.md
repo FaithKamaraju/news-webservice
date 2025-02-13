@@ -1,10 +1,10 @@
 # News Webservice with AI powered Bias and Sentiment Analysis
 This is a multi-service architecture that includes the folowing components -
 
-    1. React front-end
-    2. fastapi backend
-    3. postgresql database
-    4. a fastapi model inference endpoint
+    1. NextJs front-end
+    2. Fastapi backend
+    3. Postgresql database
+    4. A model inference endpoint
 
 The architecture of this web service is this -
 ![architecture diagram](<Webapp architecture mockup.png>)
@@ -17,8 +17,8 @@ I actually looked into deploying this on AWS ECS. Free-tier options were too lim
 
 ## Module workings
 
-1. The React frontend interacts with the FastAPI web server to fetch and display data.
-   - I was thinking the react frontend be mostly stateless? I wanna experiment and see how much more stress is put on the backend if the frontend fetches data every refresh.
+1. The NextJs frontend interacts with the FastAPI web server to fetch and display data.
+   - 
 2. The FastAPI web server:
    - Pulls data from an external API. Data is of two types - 
      - Article Metadata - title, image, url, snippet etc. Can use this data for displaying initial results on the news page. When the user clicks the specific article, the full article data is fetched.
