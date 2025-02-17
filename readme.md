@@ -7,7 +7,7 @@ This is a multi-service architecture that includes the folowing components -
     4. A model inference endpoint
 
 The architecture of this web service is this -
-![architecture diagram](<Webapp architecture mockup.pn>)
+![architecture diagram](<Webapp architecture mockup.png>)
 
 The architecture is subject to change ofc. I was planning to even split the site scraping module into another service. But that module ended up being too small to warrant another separate webserver.
 
