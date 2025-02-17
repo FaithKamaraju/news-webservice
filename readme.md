@@ -1,4 +1,4 @@
-# News Webservice with AI powered Bias and Sentiment Analysis
+# News Webservice with AI powered Political Bias scores
 This is a multi-service architecture that includes the folowing components -
 
     1. NextJs front-end
@@ -7,7 +7,7 @@ This is a multi-service architecture that includes the folowing components -
     4. A model inference endpoint
 
 The architecture of this web service is this -
-![architecture diagram](<Webapp architecture mockup.png>)
+![architecture diagram](<Webapp architecture mockup.pn>)
 
 The architecture is subject to change ofc. I was planning to even split the site scraping module into another service. But that module ended up being too small to warrant another separate webserver.
 
@@ -18,18 +18,14 @@ I actually looked into deploying this on AWS ECS. Free-tier options were too lim
 ## Module workings
 
 1. The NextJs frontend interacts with the FastAPI web server to fetch and display data.
-   - 
 2. The FastAPI web server:
    - Pulls data from an external API. Data is of two types - 
      - Article Metadata - title, image, url, snippet etc. Can use this data for displaying initial results on the news page. When the user clicks the specific article, the full article data is fetched.
      - Article content - article content is scraped using newspaper3k library.
-   - Send the new scraped data to the model inference endpoint for bias and sentiment scores.
+   - Send the new scraped data to the model inference endpoint for bias scores.
    - Updates the PostgreSQL database with the new data.
    - Provides endpoints for the frontend to get article data.
-3. The Transformer model service:
-   - Fetches relevant data from the PostgreSQL database.
-   - Performs inference and updates the database with processed results.
-4. The FastAPI web server:
-   - Retrieves the processed inferences and raw data from the database.
-   - Sends the combined results to the React frontend.
+3. The modernBERT model service:
+   - Gets relevant data from the the fastapi webserver.
+   - Performs inference and returns the results to the webserver.
 
