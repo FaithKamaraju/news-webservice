@@ -1,0 +1,1 @@
+# NextJS frontend for my "GroundNews at home" app.
