@@ -32,15 +32,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # model-endpoint:
-  #   image: faith1712/model_endpoint
+  # inference_endpoint:
   #   build:
-  #     context: ./model_endpoint
+  #     context: ./inference
+  #   dockerfile: ./inference/Dockerfile
   #   ports:
-  #     - 8080:8080
+  #     - 8001:8001
   #   restart: always
   #   volumes:
-  #     - ./model_endpoint:/app
+  #     - ./inference:/app
   #   deploy:
   #     resources:
   #       reservations:

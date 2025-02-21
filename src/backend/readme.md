@@ -23,6 +23,6 @@
 - [x] get latest news articles for front-page (article-meta-data + inference_results + scrapped_content) - \["/articles/latest", timestamp] -> List\[NewsArticleRespSchema]
 - [x] show more button
 - [x] get by categories
-- [ ] Re-run inference
+- [x] Re-run inference
 - [ ] Add domain to "excluded domains" list
 - [ ] 

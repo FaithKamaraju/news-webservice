@@ -47,9 +47,9 @@ COPY ./models/ ./models/
 COPY --exclude=./models/ . .
 
 # Expose the port that the application listens on.
-EXPOSE 8080
+EXPOSE 8001
 
 # Run the application.
-CMD ["fastapi", "run", "app.py","--host","0.0.0.0","--port", "8080","--reload"]
+CMD ["fastapi", "run", "app.py","--host","0.0.0.0","--port", "8001"]
 # CMD ["uvicorn", "app:app", "--host","0.0.0.0","--port", "8000"]
 # CMD uvicorn 'app:app' --host=0.0.0.0 --port=8000
