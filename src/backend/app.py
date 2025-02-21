@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 
 from core.db import get_db, create_all
 from core.models import ScrappedContent, InferenceResults
+from core.schemas import InferenceResultsRespSchema
 from news.article_updater_job import pull_and_add
 from core.inference import infer
 
@@ -40,15 +41,15 @@ async def read_root() -> dict[str,str]:
     return {"Hello": "World Hello namste duniya"}
 
 
-@app.post("/inference/{uuid}")
-async def rerun_inference(uuid:str, db : AsyncSession = Depends(get_db)):
+@app.post("/inference/{uuid}", tags=["inference"])
+async def rerun_inference(uuid:str, db : AsyncSession = Depends(get_db)) -> InferenceResultsRespSchema:
     
     result = await db.execute(select(ScrappedContent).filter(ScrappedContent.uuid == uuid))
     scrapped_content = result.scalars().first()
     inference_result = await infer(uuid, scrapped_content.scrapped_content)
-    inference_results_obj = InferenceResults(**inference_result)
-    db.add(inference_results_obj)
-    await db.commit()
+    # inference_results_obj = InferenceResults(**inference_result)
+    # db.add(inference_results_obj)
+    # await db.commit()
     
     return inference_result
 

@@ -19,7 +19,7 @@ services:
     #   - ./backend:/app
     depends_on:
       - db
-      # - model-endpoint
+      - inference_endpoint
 
   db:
     image: postgres
@@ -32,22 +32,21 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # inference_endpoint:
-  #   build:
-  #     context: ./inference
-  #   dockerfile: ./inference/Dockerfile
-  #   ports:
-  #     - 8001:8001
-  #   restart: always
-  #   volumes:
-  #     - ./inference:/app
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - driver: nvidia
-  #             count: 1
-  #             capabilities: [gpu]
+  inference_endpoint:
+    build:
+      context: ./inference_endpoint
+    ports:
+      - 8080:8080
+    # restart: always
+    volumes:
+      - ./inference_endpoint:/app
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
 volumes:
   postgres_data:

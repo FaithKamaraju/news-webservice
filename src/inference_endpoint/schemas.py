@@ -2,11 +2,15 @@ from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
 
-    
-class BodyParamsForInferenceSchema(BaseModel):
-    
+
+class BodyParamsSingle(BaseModel):
     uuid : str
     scrapped_content : str
+
+class BodyParamsBatch(BaseModel):
+    uuids : list[str]
+    scrapped_contents : list[str]
+
 
 class InferenceResultsRespSchema(BaseModel):
     

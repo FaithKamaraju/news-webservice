@@ -17,18 +17,13 @@ class NewsArticleMetaDataSchema(BaseModel):
     source : str
     categories : str
     
-class BodyParamsForInferenceSchema(BaseModel):
-    
-    id : int
-    uuid : str
-    scrapped_content : str
-
 class InferenceResultsRespSchema(BaseModel):
     
-    id : int
     uuid : str
-    bias : float
+    bias_score : float
+    bias_label :  str
     sentiment_score : float
+    sentiment_label : str
     
     
 class NewsArticleRespSchema(BaseModel):

@@ -8,8 +8,8 @@ from pydantic import TypeAdapter
 from core.schemas import InferenceResultsRespSchema
 
 async def infer_batch(uuids : list[str], scrapped_contents : list[str]):
-    async with aiohttp.ClientSession() as session:
-        async with session.get("http://localhost:8001/inference/batch",json={"uuid":uuids,"scrapped_content":scrapped_contents}) as resp:
+    async with aiohttp.ClientSession(trust_env=True) as session:
+        async with session.get("http://inference_endpoint:8080/inference/batch",json={"uuid":uuids,"scrapped_content":scrapped_contents}) as resp:
             try:
                 resp.raise_for_status()
                 inference_results = await resp.json()
@@ -21,12 +21,11 @@ async def infer_batch(uuids : list[str], scrapped_contents : list[str]):
             
             
 async def infer(uuid : str, scrapped_content : str):
-    async with aiohttp.ClientSession() as session:
-        async with session.get("http://localhost:8001/inference/single",json={"uuid":uuid,"scrapped_content":scrapped_content}) as resp:
+    async with aiohttp.ClientSession(trust_env=True) as session:
+        async with session.get("http://inference_endpoint:8080/inference/single",json={"uuid":uuid,"scrapped_content":scrapped_content}) as resp:
             try:
                 resp.raise_for_status()
                 inference_result = await resp.json()
-                inference_result_valid = InferenceResultsRespSchema.model_validate(inference_result)
-                return inference_result_valid
+                return inference_result
             except HTTPError as e:
                 raise HTTPError(detail="Inference result could not be fetched. Please try again later.")

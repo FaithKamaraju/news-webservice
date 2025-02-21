@@ -7,8 +7,8 @@
     - [x] add the meta-data to the database
     - [x] In the same context, scrape the text data from the website using the scraper module.
     - [x] add the scrapped content to the database
-    - [ ] In the same context, send the scrapped data to the model inference endpoint and await the inference results
-    - [ ] add the inference results to the database
+    - [x] In the same context, send the scrapped data to the model inference endpoint and await the inference results
+    - [x] add the inference results to the database
     - [x] commit and refresh the db
     - [x] close the db session
 - [ ] Repeat every 5 mins for one hour everytime the webservice is started.
