@@ -20,6 +20,7 @@ class NewsArticle(Base):
     source : Mapped[str] = mapped_column(String, index=True)
     categories : Mapped[str] = mapped_column(String)
     
+    
 class InferenceResults(Base):
     
     __tablename__ = 'inference_results'

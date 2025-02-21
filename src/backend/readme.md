@@ -20,15 +20,9 @@
 - [x] pull article meta-data (scheduled)
 
 ### Frontend - Backend
-- [ ] get latest news articles meta-data for front-page (article-meta-data) - \["/articles/latest", timestamp] -> List\[NewsArticleRespSchema]
-- [ ] get article data (specific article scrapped data + inference results) - \["/articles/{article_id}"] -> NewsArticleRespSchema
-- [ ] get article data after a specified datetime - \["articles/", timestamp] -> List\[NewsArticleRespSchema]
-
-    #### To be implemented later - 
-    - [ ] Keyword search over postgresql
-
-### Backend - Model Endpoint
-- [ ] get inference results, batched - \["/inference/batch", list\[BodyParamsForInferenceSchema]] -> List\[InferenceResultsRespSchema]
-- [ ] get inference results - \['/inference", BodyParamsForInferenceSchema] -> InferenceResultsRespSchema
-
-
+- [x] get latest news articles for front-page (article-meta-data + inference_results + scrapped_content) - \["/articles/latest", timestamp] -> List\[NewsArticleRespSchema]
+- [x] show more button
+- [x] get by categories
+- [ ] Re-run inference
+- [ ] Add domain to "excluded domains" list
+- [ ] 

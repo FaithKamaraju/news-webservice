@@ -42,5 +42,5 @@ class NewsArticleRespSchema(BaseModel):
     source : str
     categories : str
     scrapped_content : str
-    bias : float
-    sentiment_score : float
+    # bias : float
+    # sentiment_score : float

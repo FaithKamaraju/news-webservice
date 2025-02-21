@@ -53,13 +53,13 @@ async def _fetch_data(session, url, params, retries=3, backoff=2):
                     raise HTTPError(detail="This status code is not implemented in the error handling.")
     
 
-async def _get_article_metadata_per_domain(session, url, api_key, domain):
+async def _get_article_metadata_per_domain(session, url, api_key, category):
     
     todays_date = datetime.today().strftime('%Y-%m-%d')
     params = {"api_token":api_key,
           'language':'en',
           'published_on': todays_date,
-          "domains":domain,
+          'category':category,
           'page':1
           }
     top_stories = await _fetch_data(session=session,url=url,params=params)
@@ -68,12 +68,13 @@ async def _get_article_metadata_per_domain(session, url, api_key, domain):
 
 async def get_top_article_metadata(api_key, **kwargs):
     article_data = []
-    domains = kwargs.get("domains",["nbcnews.com","vox.com","cbc.ca"])
+    # domains = kwargs.get("domains",["nbcnews.com","vox.com","cbc.ca"])
+    categories = kwargs.get("categories",["general","science", "sports", "business", "health", "entertainment", "tech", "politics", "food", "travel"])
     top_url = "https://api.thenewsapi.com/v1/news/top"
     
     async with aiohttp.ClientSession() as session:
-        for domain in domains:
-            top_stories = await _get_article_metadata_per_domain(session, top_url, api_key, domain)
+        for category in categories:
+            top_stories = await _get_article_metadata_per_domain(session, top_url, api_key, category)
             if top_stories:
                 article_data = article_data + top_stories
         
