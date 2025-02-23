@@ -1,7 +1,7 @@
 # TO-DO
 ## News API module - 
 
-- [ ] When the app is started, add a AsyncIO scheduler with one job - pull the latest articles
+- [x] When the app is started, add a AsyncIO scheduler with one job - pull the latest articles
     - [x] Use the top-article endpoint and pull the first three articles.
     - [x] Check if the articles are already in the database
     - [x] add the meta-data to the database
@@ -24,5 +24,3 @@
 - [x] show more button
 - [x] get by categories
 - [x] Re-run inference
-- [ ] Add domain to "excluded domains" list
-- [ ] 

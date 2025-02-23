@@ -3,7 +3,8 @@ import uvicorn
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from contextlib import asynccontextmanager
-import json
+import os
+from dotenv import load_dotenv
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
@@ -17,10 +18,11 @@ from news.article_updater_job import pull_and_add
 from core.inference import infer
 
 from routers import articles
-    
-with open('api_key.json', 'r') as f:
-    api_key = json.load(f)['api_key']
 
+load_dotenv('dev.env')
+
+api_key = os.getenv("API_KEY")
+port = int(os.getenv("INT_SERVER_PORT"))
 
 
 @asynccontextmanager
@@ -29,6 +31,7 @@ async def lifespan(app:FastAPI):
     await create_all()
     
     yield
+
 
 app = FastAPI(lifespan=lifespan)
 
@@ -65,7 +68,7 @@ def start_scheduler(loop):
 
     
 def start_uvicorn(loop):
-    config = uvicorn.Config(app,host="0.0.0.0",port=8000 ,loop=loop)
+    config = uvicorn.Config(app,host="0.0.0.0",port=port ,loop=loop)
     server = uvicorn.Server(config)
     loop.run_until_complete(server.serve())
 

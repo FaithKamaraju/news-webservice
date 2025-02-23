@@ -1,15 +1,20 @@
 from fastapi import FastAPI
 import uvicorn
 from contextlib import asynccontextmanager
-import json
+
+import os
 import asyncio
-from datetime import datetime, timedelta
 
 from schemas import InferenceResultsRespSchema, BodyParamsBatch, BodyParamsSingle
 
 from transformers import pipeline
 from transformers import PreTrainedTokenizerFast, ModernBertForSequenceClassification
 import torch
+
+
+
+    
+port = int(os.getenv("PORT"))
 
 torch.set_float32_matmul_precision('high')
 
@@ -27,7 +32,11 @@ classifier = pipeline(
 
 app = FastAPI()
 
-@app.get("/inference/single")
+@app.get("/health", tags=["health"])
+def health() -> dict[str,str]:
+    return {"status": "ok"}
+
+@app.get("/inference/single", tags=['inference'])
 def inference_single(body : BodyParamsSingle) -> InferenceResultsRespSchema:
     uuid = body.uuid
     scrapped_content = body.scrapped_content
@@ -39,7 +48,7 @@ def inference_single(body : BodyParamsSingle) -> InferenceResultsRespSchema:
             "sentiment_label":"happy", "sentiment_score":0}
     
 
-@app.get("/inference/batch")
+@app.get("/inference/batch", tags=['inference'])
 def inference_batch(body : BodyParamsBatch) -> list[InferenceResultsRespSchema]:
     uuids = body.uuids
     scrapped_contents = body.scrapped_contents
@@ -59,7 +68,7 @@ def inference_root() -> dict[str,str]:
 
 
 def start_uvicorn(loop):
-    config = uvicorn.Config(app,host="0.0.0.0",port=8080 ,loop=loop)
+    config = uvicorn.Config(app,host="0.0.0.0",port=port ,loop=loop)
     server = uvicorn.Server(config)
     loop.run_until_complete(server.serve())
 
@@ -67,5 +76,4 @@ def start_uvicorn(loop):
 if __name__ == '__main__':
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    # start_scheduler(loop)
     start_uvicorn(loop)

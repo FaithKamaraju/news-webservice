@@ -4,7 +4,6 @@ env_activation.sh
 **/__pycache__
 **/.venv
 **/.classpath
-**/.env
 **/.git
 **/.project
 **/.settings
@@ -23,3 +22,4 @@ env_activation.sh
 **/values.dev.yaml
 *.sql
 architecture.html
+dev.env

@@ -58,16 +58,3 @@ async def get_articles_by_category(category : str, db : AsyncSession = Depends(g
         article_data.append({**article[0].__dict__, **article[1].__dict__})
     return article_data
 
-
-
-
-# @router.get("/refresh")
-# async def refresh_articles(timestamp : datetime, db: AsyncSession = Depends(get_db)) -> list[NewsArticleRespSchema]:
-    
-#     results = await db.execute(select(NewsArticle))
-#     articles = results.scalars().all()
-#     if len(articles) <=0:
-#         raise HTTPException(status_code=404, detail="No Articles Found")
-    
-#     return articles
-    

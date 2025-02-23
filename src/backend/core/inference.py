@@ -1,15 +1,17 @@
 from datetime import datetime
 import aiohttp
 from aiohttp.web import HTTPError,HTTPClientError,HTTPBadRequest, HTTPUnauthorized,HTTPNotFound,HTTPInternalServerError,HTTPServiceUnavailable
-import asyncio
+import os
 
 from pydantic import TypeAdapter
 
 from core.schemas import InferenceResultsRespSchema
 
+inference_port = os.getenv("INT_INFERENCE_PORT")
+
 async def infer_batch(uuids : list[str], scrapped_contents : list[str]):
     async with aiohttp.ClientSession(trust_env=True) as session:
-        async with session.get("http://inference_endpoint:8080/inference/batch",json={"uuid":uuids,"scrapped_content":scrapped_contents}) as resp:
+        async with session.get(f"http://inference_endpoint:{inference_port}/inference/batch",json={"uuid":uuids,"scrapped_content":scrapped_contents}) as resp:
             try:
                 resp.raise_for_status()
                 inference_results = await resp.json()
@@ -22,7 +24,7 @@ async def infer_batch(uuids : list[str], scrapped_contents : list[str]):
             
 async def infer(uuid : str, scrapped_content : str):
     async with aiohttp.ClientSession(trust_env=True) as session:
-        async with session.get("http://inference_endpoint:8080/inference/single",json={"uuid":uuid,"scrapped_content":scrapped_content}) as resp:
+        async with session.get(f"http://inference_endpoint:{inference_port}/inference/single",json={"uuid":uuid,"scrapped_content":scrapped_content}) as resp:
             try:
                 resp.raise_for_status()
                 inference_result = await resp.json()

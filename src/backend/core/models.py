@@ -26,7 +26,9 @@ class InferenceResults(Base):
     __tablename__ = 'inference_results'
     id : Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
     uuid : Mapped[str] = mapped_column(String, ForeignKey('news_article.uuid'), index=True, unique=True)
+    bias_label : Mapped[str] = mapped_column(String, index=True)
     bias_score : Mapped[float] = mapped_column(Float, index=True)
+    sentiment_label : Mapped[str] = mapped_column(String, index=True)
     sentiment_score : Mapped[float] = mapped_column(Float, index=True)
 
 class ScrappedContent(Base):
