@@ -42,8 +42,6 @@ services:
     environment:
       - PORT=${INT_INFERENCE_PORT}
     restart: always
-    volumes:
-      - ./inference_endpoint:/app
     deploy:
       resources:
         reservations:
