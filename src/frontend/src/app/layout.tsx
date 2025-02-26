@@ -9,7 +9,8 @@ import {
 } from "@mantine/core";
 import { theme } from "../../theme";
 
-import { HeaderSearch } from "./components/HeaderSearch";
+import { HeaderTabs } from "./components/HeaderTabs";
+import { FooterLinks } from "./components/FooterLinks";
 
 export default function RootLayout({
   children,
@@ -28,8 +29,9 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider defaultColorScheme="dark" theme={theme}>
-          <HeaderSearch />
+          <HeaderTabs />
           {children}
+          <FooterLinks />
         </MantineProvider>
       </body>
     </html>

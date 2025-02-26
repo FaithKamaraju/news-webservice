@@ -39,10 +39,6 @@ app.include_router(articles.router)
 
 
 
-@app.get("/")
-async def read_root() -> dict[str,str]:
-    return {"Hello": "World Hello namste duniya"}
-
 
 @app.post("/inference/{uuid}", tags=["inference"])
 async def rerun_inference(uuid:str, db : AsyncSession = Depends(get_db)) -> InferenceResultsRespSchema:

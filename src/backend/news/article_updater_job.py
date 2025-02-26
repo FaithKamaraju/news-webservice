@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from core.db import async_session_local
 from core.models import NewsArticle, ScrappedContent, InferenceResults
-from core.inference import infer, infer_batch
+from core.inference import infer_batch
 
 
 # stmt = text("""

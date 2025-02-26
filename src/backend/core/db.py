@@ -2,11 +2,6 @@ import os
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-# - POSTGRES_USER=${POSTGRES_USER}
-# - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-# - POSTGRES_DB=${POSTGRES_DB}
-# - EXT_POSTGRES_PORT=${EXT_POSTGRES_PORT}
-
 postgres_user = os.getenv("POSTGRES_USER")
 postgres_passwd = os.getenv("POSTGRES_PASSWORD")
 postgres_db = os.getenv("POSTGRES_DB")

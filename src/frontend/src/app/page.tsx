@@ -1,11 +1,8 @@
-import Image from "next/image";
+// "use client";
+import NewsFeedGrid from "./components/NewsFeedGrid";
 
 import styles from "./page.module.css";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main></main>
-    </div>
-  );
+  return <NewsFeedGrid />;
 }
