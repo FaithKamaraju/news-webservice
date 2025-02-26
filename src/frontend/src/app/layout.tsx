@@ -9,8 +9,8 @@ import {
 } from "@mantine/core";
 import { theme } from "../../theme";
 
-import { HeaderTabs } from "./components/HeaderTabs";
-import { FooterLinks } from "./components/FooterLinks";
+import { HeaderTabs } from "./_components/HeaderTabs";
+import { FooterLinks } from "./_components/FooterLinks";
 
 export default function RootLayout({
   children,

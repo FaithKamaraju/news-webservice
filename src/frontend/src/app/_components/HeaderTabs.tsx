@@ -9,6 +9,7 @@ import classes from "./HeaderTabs.module.css";
 import Logo from "./Logo";
 
 const categories = [
+  "Top Stories",
   "General",
   "Science",
   "Sports",
@@ -30,7 +31,7 @@ export function HeaderTabs() {
 
   return (
     <div className={classes.header}>
-      <Container fluid style={{ marginBottom: "50px" }}>
+      <Container fluid style={{ marginBottom: "20px" }}>
         <Group align="center">
           <Logo />
           <Container fluid>

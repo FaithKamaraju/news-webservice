@@ -10,19 +10,7 @@ import {
 } from "@mantine/core";
 import classes from "./NewsCardLarge.module.css";
 
-type CardDataLarge = {
-  uuid: string;
-  title: string;
-  description: string;
-  snippet: string;
-  url: string;
-  image_url: string;
-  published_at: string;
-  source: string;
-  categories: string[];
-};
-
-export default function NewsCardLarge(props: { data: CardDataLarge }) {
+export default function NewsCardLarge(props: { data: CardData }) {
   const {
     uuid,
     title,
